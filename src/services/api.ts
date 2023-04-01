@@ -1,6 +1,7 @@
 import { signOut } from '@/contexts/AuthContext';
 import axios, { AxiosError } from 'axios';
 import { parseCookies, setCookie } from 'nookies';
+import { AuthTokenError } from './errors/AuthTokenError';
 
 interface AxiosErrorResponse {
   code?: string;
@@ -32,6 +33,7 @@ export function setupAPIClient(ctx = undefined) {
   
         if(!isRefreshing){
           isRefreshing = true;
+          console.log('refreshing')
           api.post('/refresh', {
             refreshToken
           }).then(response => {
@@ -81,6 +83,8 @@ export function setupAPIClient(ctx = undefined) {
         if(typeof window !== 'undefined') {
           console.log(process)
           signOut();
+        } else {
+          return Promise.reject(new AuthTokenError);
         }
       }
     }
