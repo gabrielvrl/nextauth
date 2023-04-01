@@ -5,6 +5,7 @@ import { parseCookies } from 'nookies';
 
 import { AuthContext } from '@/contexts/AuthContext';
 import { withSSRGuest } from '@/utils/withSSRGuest';
+import { api } from '@/services/apiClient';
 
 export default function Home() {
   const [email, setEmail] = useState('');
